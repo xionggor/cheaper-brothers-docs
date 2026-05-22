@@ -208,15 +208,19 @@
   <script>
   (function() {
     var cookieName = 'cbp_session';
-    var hash = window.location.hash;
-    if (hash && hash.indexOf('/private') >= 0) {
-      var hasCookie = document.cookie.split(';').some(function(c) {
-        return c.trim().indexOf(cookieName + '=') === 0;
-      });
-      if (!hasCookie) {
-        window.location.href = '/login?goto=' + encodeURIComponent(window.location.pathname + window.location.hash);
+    function checkAuth() {
+      var hash = window.location.hash;
+      if (hash && (hash.indexOf('/private') >= 0 || hash.indexOf('private/') >= 0)) {
+        var hasCookie = document.cookie.split(';').some(function(c) {
+          return c.trim().indexOf(cookieName + '=') === 0;
+        });
+        if (!hasCookie) {
+          window.location.href = '/login?goto=' + encodeURIComponent(window.location.pathname + window.location.hash);
+        }
       }
     }
+    checkAuth();
+    window.addEventListener('hashchange', checkAuth);
   })();
   </script>
 </body>
