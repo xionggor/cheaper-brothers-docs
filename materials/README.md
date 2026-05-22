@@ -56,4 +56,3 @@
 | 供应商 | 链接 |
 |--------|------|
 | **HDR PRINTING**（印刷外包参考） | https://hdrprint.com/products/banners |
-| **signsandmirrors.com**（潜在商品参考） | https://signsandmirrors.com |
