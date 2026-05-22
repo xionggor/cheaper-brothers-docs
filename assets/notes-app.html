@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>留言板 — Cheaper Brothers Printing</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC", sans-serif;
+      background: #faf7f2;
+      color: #3d3530;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 40px 20px 80px;
+    }
+    h1 {
+      font-size: 24px;
+      color: #2d2824;
+      border-bottom: 2px solid #f5e6d0;
+      padding-bottom: 14px;
+      margin-bottom: 28px;
+      font-weight: 700;
+    }
+    .back-link {
+      display: inline-block;
+      margin-bottom: 20px;
+      color: #c8954e;
+      text-decoration: none;
+      font-size: 14px;
+    }
+    .back-link:hover { text-decoration: underline; }
+
+    /* Input area */
+    .input-area {
+      background: #fff;
+      border: 1px solid #e3dac8;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 24px;
+    }
+    .input-area textarea {
+      width: 100%;
+      border: none;
+      outline: none;
+      resize: vertical;
+      font-size: 15px;
+      font-family: inherit;
+      color: #3d3530;
+      min-height: 60px;
+      line-height: 1.6;
+    }
+    .input-area textarea::placeholder { color: #b0a89c; }
+    .input-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid #f0eadc;
+    }
+    .char-count {
+      font-size: 12px;
+      color: #b0a89c;
+    }
+    .btn-submit {
+      background: #c8954e;
+      color: #fff;
+      border: none;
+      padding: 8px 24px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.2s;
+    }
+    .btn-submit:hover { background: #b07d38; }
+    .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* Notes list */
+    .note-item {
+      background: #fff;
+      border: 1px solid #e3dac8;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 12px;
+      transition: box-shadow 0.2s;
+    }
+    .note-item:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+    .note-content {
+      font-size: 15px;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .note-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid #f0eadc;
+    }
+    .note-date {
+      font-size: 12px;
+      color: #b0a89c;
+    }
+    .note-actions {
+      display: flex;
+      gap: 8px;
+    }
+    .btn-icon {
+      background: none;
+      border: 1px solid #e3dac8;
+      padding: 4px 12px;
+      border-radius: 4px;
+      font-size: 12px;
+      cursor: pointer;
+      font-family: inherit;
+      color: #8a7e72;
+      transition: all 0.2s;
+    }
+    .btn-icon:hover { border-color: #c8954e; color: #c8954e; }
+    .btn-delete:hover { border-color: #e05a5a; color: #e05a5a; }
+
+    /* Edit mode */
+    .edit-textarea {
+      width: 100%;
+      border: 1px solid #c8954e;
+      outline: none;
+      resize: vertical;
+      font-size: 15px;
+      font-family: inherit;
+      color: #3d3530;
+      min-height: 60px;
+      line-height: 1.6;
+      padding: 8px;
+      border-radius: 4px;
+      background: #fcf9f5;
+    }
+    .edit-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .btn-save {
+      background: #c8954e;
+      color: #fff;
+      border: none;
+      padding: 6px 16px;
+      border-radius: 4px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .btn-save:hover { background: #b07d38; }
+    .btn-cancel {
+      background: none;
+      border: 1px solid #e3dac8;
+      padding: 6px 16px;
+      border-radius: 4px;
+      font-size: 13px;
+      cursor: pointer;
+      font-family: inherit;
+      color: #8a7e72;
+    }
+    .btn-cancel:hover { border-color: #c8954e; color: #c8954e; }
+
+    /* Empty state */
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: #b0a89c;
+    }
+    .empty-state p { font-size: 15px; line-height: 1.6; }
+
+    /* Loading */
+    .loading {
+      text-align: center;
+      padding: 40px;
+      color: #b0a89c;
+      font-size: 14px;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #2d2824;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-size: 14px;
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+    }
+    .toast.show { opacity: 1; }
+
+    @media (max-width: 600px) {
+      .container { padding: 20px 16px 80px; }
+      h1 { font-size: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a class="back-link" href="/">← 返回首页</a>
+    <h1>📝 留言板</h1>
+
+    <div class="input-area">
+      <textarea id="noteInput" placeholder="写点什么…" maxlength="2000"></textarea>
+      <div class="input-actions">
+        <span class="char-count"><span id="charCount">0</span>/2000</span>
+        <button class="btn-submit" id="submitBtn" onclick="addNote()">发布</button>
+      </div>
+    </div>
+
+    <div id="notesList">
+      <div class="loading">加载中…</div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    var AA_API = 'https://aa-app-api.zxc717209554.workers.dev';
+
+    function getToken() {
+      var match = document.cookie.match(/cbp_session=([^;]+)/);
+      if (!match) return null;
+      try {
+        var data = JSON.parse(decodeURIComponent(match[1]));
+        return data.token;
+      } catch(e) { return null; }
+    }
+
+    function showToast(msg) {
+      var t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(function() { t.classList.remove('show'); }, 2500);
+    }
+
+    function formatDate(iso) {
+      var d = new Date(iso);
+      var month = (d.getMonth() + 1).toString().padStart(2, '0');
+      var day = d.getDate().toString().padStart(2, '0');
+      var hour = d.getHours().toString().padStart(2, '0');
+      var min = d.getMinutes().toString().padStart(2, '0');
+      return month + '/' + day + ' ' + hour + ':' + min;
+    }
+
+    function loadNotes() {
+      var token = getToken();
+      if (!token) {
+        document.getElementById('notesList').innerHTML = '<div class="empty-state"><p>登录已过期，请重新<a href="/login?goto=/app/notes" style="color:#c8954e">登录</a></p></div>';
+        return;
+      }
+      fetch(AA_API + '/api/notes', {
+        headers: { 'Authorization': 'Bearer ' + token }
+      }).then(function(r) { return r.json(); }).then(function(data) {
+        if (data.error) throw new Error(data.error);
+        renderNotes(data.notes || []);
+      }).catch(function(err) {
+        document.getElementById('notesList').innerHTML = '<div class="empty-state"><p>加载失败: ' + err.message + '</p></div>';
+      });
+    }
+
+    function renderNotes(notes) {
+      var el = document.getElementById('notesList');
+      if (notes.length === 0) {
+        el.innerHTML = '<div class="empty-state"><p>还没有留言<br>写下第一条吧 ✍️</p></div>';
+        return;
+      }
+      var html = '';
+      notes.forEach(function(note) {
+        html += '<div class="note-item" id="note-' + note.id + '">';
+        html += '<div class="note-content" id="content-' + note.id + '">' + escapeHtml(note.content) + '</div>';
+        html += '<div class="note-meta">';
+        html += '<span class="note-date">' + formatDate(note.createdAt) + '</span>';
+        html += '<div class="note-actions">';
+        html += '<button class="btn-icon" onclick="editNote(\'' + note.id + '\')">编辑</button>';
+        html += '<button class="btn-icon btn-delete" onclick="deleteNote(\'' + note.id + '\')">删除</button>';
+        html += '</div></div></div>';
+      });
+      el.innerHTML = html;
+    }
+
+    function escapeHtml(text) {
+      var d = document.createElement('div');
+      d.textContent = text;
+      return d.innerHTML;
+    }
+
+    function addNote() {
+      var input = document.getElementById('noteInput');
+      var content = input.value.trim();
+      if (!content) { showToast('请输入内容'); return; }
+      var btn = document.getElementById('submitBtn');
+      btn.disabled = true;
+      btn.textContent = '发布中…';
+      var token = getToken();
+      if (!token) { showToast('登录已过期'); return; }
+      fetch(AA_API + '/api/notes', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+        body: JSON.stringify({ content: content })
+      }).then(function(r) { return r.json(); }).then(function(data) {
+        if (data.error) throw new Error(data.error);
+        input.value = '';
+        updateCharCount();
+        showToast('已发布 ✅');
+        loadNotes();
+      }).catch(function(err) {
+        showToast('发布失败: ' + err.message);
+      }).finally(function() {
+        btn.disabled = false;
+        btn.textContent = '发布';
+      });
+    }
+
+    function editNote(id) {
+      var contentEl = document.getElementById('content-' + id);
+      var originalContent = contentEl.textContent;
+      contentEl.innerHTML = '<textarea class="edit-textarea" id="edit-' + id + '">' + escapeHtml(originalContent) + '</textarea>';
+      contentEl.innerHTML += '<div class="edit-actions">';
+      contentEl.innerHTML += '<button class="btn-save" onclick="saveEdit(\'' + id + '\')">保存</button>';
+      contentEl.innerHTML += '<button class="btn-cancel" onclick="cancelEdit(\'' + id + '\', \'' + escapeHtml(originalContent) + '\')">取消</button></div>';
+    }
+
+    function saveEdit(id) {
+      var textarea = document.getElementById('edit-' + id);
+      var content = textarea.value.trim();
+      if (!content) { showToast('内容不能为空'); return; }
+      var token = getToken();
+      fetch(AA_API + '/api/notes/' + id, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+        body: JSON.stringify({ content: content })
+      }).then(function(r) { return r.json(); }).then(function(data) {
+        if (data.error) throw new Error(data.error);
+        showToast('已更新 ✅');
+        loadNotes();
+      }).catch(function(err) {
+        showToast('更新失败: ' + err.message);
+      });
+    }
+
+    function cancelEdit(id, original) {
+      var contentEl = document.getElementById('content-' + id);
+      contentEl.innerHTML = original;
+    }
+
+    function deleteNote(id) {
+      if (!confirm('确定删除这条留言吗？')) return;
+      var token = getToken();
+      fetch(AA_API + '/api/notes/' + id, {
+        method: 'DELETE',
+        headers: { 'Authorization': 'Bearer ' + token }
+      }).then(function(r) { return r.json(); }).then(function(data) {
+        if (data.error) throw new Error(data.error);
+        showToast('已删除 🗑️');
+        loadNotes();
+      }).catch(function(err) {
+        showToast('删除失败: ' + err.message);
+      });
+    }
+
+    function updateCharCount() {
+      var len = document.getElementById('noteInput').value.length;
+      document.getElementById('charCount').textContent = len;
+    }
+    document.getElementById('noteInput').addEventListener('input', updateCharCount);
+
+    // Ctrl+Enter to submit
+    document.getElementById('noteInput').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+        e.preventDefault();
+        addNote();
+      }
+    });
+
+    loadNotes();
+  </script>
+</body>
+</html>
