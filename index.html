@@ -321,12 +321,7 @@
     function checkAuth() {
       var hash = window.location.hash;
       if (hash && (hash.indexOf('/private') >= 0 || hash.indexOf('private/') >= 0)) {
-        var hasCookie = document.cookie.split(';').some(function(c) {
-          return c.trim().indexOf(cookieName + '=') === 0;
-        });
-        if (!hasCookie) {
-          window.location.href = '/login?goto=' + encodeURIComponent(window.location.pathname + window.location.hash);
-        }
+        window.location.href = '/private';
       }
     }
     checkAuth();
