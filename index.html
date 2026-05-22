@@ -203,5 +203,21 @@
 
   <!-- Prism for code highlighting -->
   <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
+
+  <!-- Auth check for private pages -->
+  <script>
+  (function() {
+    var cookieName = 'cbp_session';
+    var hash = window.location.hash;
+    if (hash && hash.indexOf('/private') >= 0) {
+      var hasCookie = document.cookie.split(';').some(function(c) {
+        return c.trim().indexOf(cookieName + '=') === 0;
+      });
+      if (!hasCookie) {
+        window.location.href = '/login?goto=' + encodeURIComponent(window.location.pathname + window.location.hash);
+      }
+    }
+  })();
+  </script>
 </body>
 </html>
