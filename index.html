@@ -6,20 +6,35 @@
   <title>Cheaper Brothers Printing — 合作伙伴手册</title>
   <meta name="description" content="Cheaper Brothers Printing 合作伙伴资料库 — 服务、材料、报价及账单" />
 
-  <!-- Docsify CSS -->
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/dark.css" />
+  <!-- Docsify CSS - Vue theme as base (clean light) -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css" />
 
-  <!-- Custom Styles -->
+  <!-- Warm White Custom Styles -->
   <style>
     :root {
       --sidebar-width: 18rem;
       --base-font-size: 16px;
-      --theme-color: #4a8cff;
+      --theme-color: #c8954e;
+      --bg-warm: #faf7f2;
+      --bg-sidebar: #f0eadc;
+      --text-dark: #3d3530;
+      --text-muted: #8a7e72;
+      --border-warm: #e3dac8;
+      --accent-gold: #c8954e;
+      --accent-light: #f5e6d0;
     }
 
+    /* Base */
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC", sans-serif;
+      background: var(--bg-warm);
+      color: var(--text-dark);
+    }
+
+    /* Sidebar */
     .sidebar {
-      background: #111;
-      border-right: 1px solid #222;
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border-warm);
     }
 
     .sidebar-nav li {
@@ -27,7 +42,7 @@
     }
 
     .sidebar ul li a {
-      color: #aaa;
+      color: var(--text-muted);
       font-size: 15px;
       padding: 10px 20px;
       border-left: 3px solid transparent;
@@ -35,14 +50,14 @@
     }
 
     .sidebar ul li a:hover {
-      color: #fff;
-      background: #1a1a1a;
-      border-left-color: var(--theme-color);
+      color: var(--text-dark);
+      background: rgba(255,255,255,0.5);
+      border-left-color: var(--accent-gold);
     }
 
     .sidebar ul li.active > a {
-      color: var(--theme-color);
-      border-left-color: var(--theme-color);
+      color: var(--accent-gold);
+      border-left-color: var(--accent-gold);
       font-weight: 600;
     }
 
@@ -65,26 +80,25 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 20px;
+      padding: 28px 20px 20px;
       text-align: center;
-      border-bottom: 1px solid #222;
+      border-bottom: 1px solid var(--border-warm);
     }
 
     .app-name-link::before {
       content: "CBP";
-      font-size: 36px;
+      font-size: 32px;
       font-weight: 900;
-      letter-spacing: 4px;
-      color: #4a8cff;
-      margin-bottom: 4px;
+      letter-spacing: 6px;
+      color: var(--accent-gold);
+      margin-bottom: 6px;
     }
 
     .app-name-link span {
       font-size: 11px;
-      color: #666;
+      color: var(--text-muted);
       letter-spacing: 2px;
       text-transform: uppercase;
-      margin-top: 2px;
     }
 
     .app-name-link img,
@@ -92,82 +106,181 @@
       display: none;
     }
 
+    /* Content area */
     .content {
       padding-top: 40px;
+      background: var(--bg-warm);
+    }
+
+    .markdown-section {
+      max-width: 860px;
+      color: var(--text-dark);
     }
 
     .markdown-section h1 {
-      font-size: 2.2rem;
-      border-bottom: 1px solid #222;
-      padding-bottom: 16px;
-      margin-bottom: 32px;
+      font-size: 2rem;
+      color: #2d2824;
+      border-bottom: 2px solid var(--accent-light);
+      padding-bottom: 14px;
+      margin-bottom: 28px;
+      font-weight: 700;
     }
 
     .markdown-section h2 {
-      border-bottom: 1px solid #1a1a1a;
+      color: #3d3530;
+      border-bottom: 1px solid var(--border-warm);
       padding-bottom: 8px;
+      margin-top: 36px;
+      font-weight: 600;
     }
 
+    .markdown-section h3 {
+      color: #4d4238;
+      font-weight: 600;
+      margin-top: 24px;
+    }
+
+    .markdown-section p {
+      line-height: 1.7;
+      color: var(--text-dark);
+    }
+
+    /* Tables */
     .markdown-section table {
       width: 100%;
       border-collapse: collapse;
+      margin: 16px 0;
+      border-radius: 6px;
+      overflow: hidden;
     }
 
     .markdown-section th {
-      background: #1a1a1a;
-      color: #4a8cff;
+      background: #e8dcc8;
+      color: #4d4238;
       font-weight: 600;
+      font-size: 13px;
+      letter-spacing: 0.5px;
       text-transform: uppercase;
-      font-size: 12px;
-      letter-spacing: 1px;
+      padding: 10px 14px;
     }
 
     .markdown-section td,
     .markdown-section th {
-      border-color: #2a2a2a;
+      border: 1px solid var(--border-warm);
       padding: 10px 14px;
     }
 
     .markdown-section tr:nth-child(even) {
-      background: #0d0d0d;
+      background: #f5efe4;
     }
 
+    .markdown-section tr:hover {
+      background: #efe6d6;
+    }
+
+    /* Blockquotes */
     .markdown-section blockquote {
-      border-left: 4px solid #4a8cff;
-      background: #0d1520;
-      color: #ccc;
+      border-left: 4px solid var(--accent-gold);
+      background: #f5efe4;
+      color: var(--text-dark);
+      padding: 12px 20px;
+      border-radius: 0 6px 6px 0;
     }
 
-    /* Private page indicator */
-    .private-badge {
-      display: inline-block;
-      background: #ff8c3a;
-      color: #000;
-      font-size: 10px;
-      font-weight: 700;
-      padding: 2px 8px;
+    /* Code / inline */
+    .markdown-section code {
+      background: #efe6d6;
+      color: #5d4d3d;
+      padding: 2px 6px;
       border-radius: 3px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-left: 6px;
-      vertical-align: middle;
+      font-size: 0.9em;
     }
 
-    /* Cover */
+    /* Links */
+    .markdown-section a {
+      color: var(--accent-gold);
+      font-weight: 500;
+    }
+
+    .markdown-section a:hover {
+      color: #a67a3a;
+      text-decoration: underline;
+    }
+
+    /* Horizontal rule */
+    .markdown-section hr {
+      border: none;
+      border-top: 1px solid var(--border-warm);
+      margin: 32px 0;
+    }
+
+    /* Lists */
+    .markdown-section ul li {
+      margin: 6px 0;
+      line-height: 1.6;
+    }
+
+    /* Cover page */
     section.cover {
-      background: linear-gradient(135deg, #0a0a0a 0%, #111 50%, #0a1520 100%) !important;
+      background: linear-gradient(135deg, #f5efe4 0%, #faf7f2 50%, #f0eadc 100%) !important;
+    }
+    section.cover .cover-main {
+      max-width: 600px;
+      margin: 0 auto;
     }
     section.cover h1 {
-      color: #4a8cff !important;
+      color: #2d2824 !important;
       font-size: 3rem;
       font-weight: 900;
+      letter-spacing: -0.5px;
     }
     section.cover p {
-      color: #888 !important;
+      color: var(--text-muted) !important;
+      font-size: 1.1rem;
+      line-height: 1.6;
     }
     section.cover .cover-main > p:last-child a {
-      color: #4a8cff !important;
-      border-color: #4a8cff !important;
+      color: var(--accent-gold) !important;
+      border-color: var(--accent-gold) !important;
+      border-radius: 6px;
+      padding: 10px 28px;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+    section.cover .cover-main > p:last-child a:hover {
+      background: var(--accent-gold) !important;
+      color: #fff !important;
+    }
+
+    /* Copy code button */
+    .docsify-copy-code-button {
+      background: var(--accent-gold) !important;
+      border-radius: 4px !important;
+    }
+
+    /* Search */
+    .sidebar .search {
+      border-bottom: 1px solid var(--border-warm);
+    }
+    .sidebar .search input {
+      background: #f5efe4;
+      border: 1px solid var(--border-warm);
+      border-radius: 6px;
+      color: var(--text-dark);
+    }
+    .sidebar .search input:focus {
+      border-color: var(--accent-gold);
+    }
+
+    /* Pagination */
+    .docsify-pagination-container {
+      border-top: 1px solid var(--border-warm) !important;
+    }
+    .pagination-item-label {
+      color: var(--accent-gold) !important;
+    }
+    .pagination-item-subtitle {
+      color: var(--text-muted) !important;
     }
   </style>
 </head>
@@ -183,7 +296,7 @@
       coverpage: true,
       search: 'auto',
       subMaxLevel: 3,
-      themeColor: '#4a8cff',
+      themeColor: '#c8954e',
       formatUpdated: '{YYYY}-{MM}-{DD}',
       pagination: {
         previousText: '← 上一页',
@@ -200,9 +313,6 @@
   <script src="//cdn.jsdelivr.net/npm/docsify-pagination/dist/docsify-pagination.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
-
-  <!-- Prism for code highlighting -->
-  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
 
   <!-- Auth check for private pages -->
   <script>
