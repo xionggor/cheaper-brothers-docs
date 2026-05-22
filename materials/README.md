@@ -48,3 +48,12 @@
 | 🟢 浅蓝/绿/棕 | Light Blue · Azure Blue · Teal · Lime Green · Forest Green · Choc Brown · Beige |
 | ✨ 金属/特殊 | Brushed Gold · Gold Mirror · Chrome · Silver · Gold · Hologram · Frosted (etched) |
 | ⚫ 灰/黑/白 | Slate Grey · Medium Grey · Battleship Grey · Dark Grey · Black（-Matte / -Glossy）· White（-Matte / -Glossy） |
+
+---
+
+## 供应商链接
+
+| 供应商 | 链接 |
+|--------|------|
+| **HDR PRINTING**（印刷外包参考） | https://hdrprint.com/products/banners |
+| **signsandmirrors.com**（潜在商品参考） | https://signsandmirrors.com |
