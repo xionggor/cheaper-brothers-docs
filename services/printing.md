@@ -13,6 +13,7 @@
   - Retractable Banner
 - **Backlit Film** — 灯箱片
 - **Canvas** — 画布
+- **Window Wrap** — 打印 Vinyl 贴窗户
 - **Static Cling Vinyl** — 静电贴
   - White Color（Regular）
   - Clear（Reverse）
@@ -50,3 +51,40 @@
 
 **HDR PRINTING**
 🔗 https://hdrprint.com/products/banners
+
+---
+
+## 价格公式
+
+> 长(英寸) × 宽(英寸) ÷ 144 × 单价 = 价格
+
+### 标准单价（VIDA）
+
+| 材料 | 单价/sqft | 备注 |
+|------|-----------|------|
+| **Vinyl** | $12 | 标准乙烯基 |
+| **Banner** | $12 | 横幅材料 |
+| **Clear Vinyl** | $13 | 标准透明乙烯基 |
+| **Clear Vinyl Reverse** | $14 | 反打 + 白色底图层 |
+
+### 举例
+> 一张 30" × 40" 的 Vinyl 打印：
+> 30×40 = 1200 → 1200÷144 = 8.33 sqft → 8.33×$12 = **$100**
+
+---
+
+## Clear Vinyl 知识点
+
+### Reverse Print（反打）
+Clear Vinyl 反打时，**后面需要叠一层白色图层**。
+
+- 因为打印机不会打出白色，不加白色图层的话颜色只有**半透明效果**
+- 白色底图层会让图像更加**巩固、实体**
+- 反打通常从玻璃内部安装，朝外展示
+
+### UV 打印在透明 Vinyl
+UV 打印在透明乙烯基上可以做到 **3 层**打印：
+
+> **颜色 → 白色 → 颜色**
+
+这样实现**双面都有图像**的效果。

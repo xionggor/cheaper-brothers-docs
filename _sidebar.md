@@ -4,6 +4,8 @@
   * [数字印刷](services/printing)
   * [霓虹灯](services/signage)
   * [贴纸与刻字](services/decals)
+* **🧱 材料参考**
+  * [材料总览](materials/)
 * **📦 潜在商品**
   * [商品列表](products/)
 * **🔒 私人页面**
