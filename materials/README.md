@@ -53,6 +53,7 @@
 
 ## 供应商链接
 
-| 供应商 | 链接 |
-|--------|------|
-| **HDR PRINTING**（印刷外包参考） | https://hdrprint.com/products/banners |
+| 供应商 | 说明 | 链接 |
+|--------|------|------|
+| **HDR PRINTING** | 印刷外包参考 | https://hdrprint.com/products/banners |
+| **中山盈标牌科技有限公司** | 亚克力招牌为主，可报价包运费 | https://yingsign.com |
